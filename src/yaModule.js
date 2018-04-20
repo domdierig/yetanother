@@ -14,12 +14,16 @@ class YAModule {
             }
         }        
         this.htmlElement.innerHTML = this.jsObj.view;
-        this.checkForDirectories()
+        this.checkForDirective()
     }
 
-    checkForDirectories() {
-        let updates = this.htmlElement.querySelectorAll("[ya-update]");
-        let yam = this;
+    checkForDirective() {
+        this.handleUpdateDirective();
+        this.handleClickDirective();
+    }
+
+    handleUpdateDirective() {
+        let updates = this.htmlElement.querySelectorAll("[ya-update]");        
         for (let ele of updates) {
             let updateProperty = ele.getAttribute("ya-update");
             ele.innerText = this.jsObj[updateProperty];
@@ -28,7 +32,10 @@ class YAModule {
                 ele.innerText = this.jsObj[updateProperty];
             }
         }
-        
+    }
+
+    handleClickDirective() {
+        let yam = this;
         let clicks = this.htmlElement.querySelectorAll("[ya-click]");
         for (let ele of clicks) {
             let clickProperty = ele.getAttribute("ya-click");

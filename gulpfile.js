@@ -10,10 +10,10 @@ let yaFiles = [
 ];
 
 gulp.task("watch", function() {
-    gulp.watch("./src/*.js", ["buildYA"])
+    gulp.watch("./src/*.js", ["build"])
 })
 
-gulp.task("buildYA", function() {
+gulp.task("build", function() {
     return gulp.src(yaFiles)
         .pipe(concat("ya.js"))
         .pipe(gulp.dest("./"));

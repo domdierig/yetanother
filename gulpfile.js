@@ -3,14 +3,14 @@ let concat = require("gulp-concat");
 let watch = require("gulp-watch");
 
 let yaFiles = [
-    "./yetanother/yaModuleFactory.js",
-    "./yetanother/yaModuleManager.js",
-    "./yetanother/yaModule.js",
-    "./yetanother/ya.js"
+    "./src/yaModuleFactory.js",
+    "./src/yaModuleManager.js",
+    "./src/yaModule.js",
+    "./src/ya.js"
 ];
 
 gulp.task("watch", function() {
-    gulp.watch("./yetanother/*.js", ["buildYA"])
+    gulp.watch("./src/*.js", ["buildYA"])
 })
 
 gulp.task("buildYA", function() {

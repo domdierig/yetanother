@@ -20,6 +20,9 @@ class YAModule {
     checkForDirective() {
         this.handleUpdateDirective();
         this.handleClickDirective();
+        //this.handleLoopDirective();
+        //this.handleIfDirective();
+        //this.handleShowDirective();
     }
 
     handleUpdateDirective() {
@@ -41,6 +44,43 @@ class YAModule {
             let clickProperty = ele.getAttribute("ya-click");
             
             ele.onclick = function() { yam.jsObj[clickProperty]() };
+        }
+    }
+
+    handleLoopDirective() {
+        let loops = this.htmlElement.querySelectorAll("[ya-loop]");
+        for (let ele of loops) {
+            let loopProperty = ele.getAttribute("ya-loop");
+        }
+    }
+
+    handleIfDirective() {
+        let ifs = this.htmlElement.querySelectorAll("[ya-if]");
+        for (let ele of ifs) {
+            let ifProperty = ele.getAttribute("ya-if");
+
+            if (!this.jsObj[ifProperty]) {
+                this.htmlElement.removeChild(ele);
+            }
+        }
+    }
+
+    handleShowDirective() {
+        let shows = this.htmlElement.querySelectorAll("[ya-show]");
+        for (let ele of shows) {
+            let showProperty = ele.getAttribute("ya-show");
+
+            if (!this.jsObj[showProperty]) {
+                ele.style.display = "none";
+            }
+
+            this.jsObj[updateProperty + "_f"] = () => {
+                if (this.jsObj[showProperty]) {
+                    ele.style.display = "inherit";
+                } else {
+                    ele.style.display = "none";
+                }
+            }
         }
     }
 }

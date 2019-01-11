@@ -1,9 +1,11 @@
-class YA {
+import createYaComponent from "./yaComponentCreator.js";
+
+export default class YA {
     constructor() {
-        this.moduleManager = new YAModuleManager();
+        
     }
 
-    add(jsObj) {
-        this.moduleManager.addModule(jsObj);
+    start(objConstructor) {
+        createYaComponent(objConstructor);
     }
 }

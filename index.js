@@ -1,5 +1,4 @@
-let ya = new YA();
+import HelloWorld from "./HelloWorld.js";
 
-let module = new HelloWorld();
-
-ya.add(module);
+const ya = new YA();
+ya.start(HelloWorld);

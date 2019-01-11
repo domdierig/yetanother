@@ -1,4 +1,4 @@
-export default (obj) => {
+module.exports = (obj) => {
     for(const key in obj) {
         debugger;
     }

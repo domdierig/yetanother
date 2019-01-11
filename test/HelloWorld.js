@@ -1,4 +1,4 @@
-class HelloWorld {
+export default class HelloWorld {
     constructor() {
         this.template = '<div><span>{{ text }}</span> <span ya-update="count"></span> <span>{{text2}}</span></div><button class="button" ya-click="clickfunction">Click mich</button>';
         this.text = "I was clicked"; 

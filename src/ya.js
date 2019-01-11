@@ -1,6 +1,6 @@
-import createYaComponent from "./yaComponentCreator.js";
+const createYaComponent = require("./yaComponentCreator.js");
 
-export default class YA {
+class YA {
     constructor() {
         
     }
@@ -9,3 +9,5 @@ export default class YA {
         createYaComponent(objConstructor);
     }
 }
+
+module.exports = YA;

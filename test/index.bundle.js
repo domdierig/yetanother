@@ -86,14 +86,37 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "../src/ya.js":
+/*!********************!*\
+  !*** ../src/ya.js ***!
+  \********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("const createYaComponent = __webpack_require__(/*! ./yaComponentCreator.js */ \"../src/yaComponentCreator.js\");\r\n\r\nclass YA {\r\n    constructor() {\r\n        \r\n    }\r\n\r\n    start(objConstructor) {\r\n        createYaComponent(objConstructor);\r\n    }\r\n}\r\n\r\nmodule.exports = YA;\n\n//# sourceURL=webpack:///../src/ya.js?");
+
+/***/ }),
+
+/***/ "../src/yaComponentCreator.js":
+/*!************************************!*\
+  !*** ../src/yaComponentCreator.js ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = (obj) => {\r\n    for(const key in obj) {\r\n        debugger;\r\n    }\r\n}\r\n\r\n\r\n\r\n\r\n// createYAModule(jsObj, htmlElement) {\r\n//     for(let key in jsObj) {\r\n//         if(key !== \"view\") {\r\n//             let value = jsObj[key];\r\n\r\n//             Object.defineProperty(jsObj, key, {\r\n//                 get: function() {\r\n//                     return this[\"_\" + key]\r\n//                 },\r\n//                 set: function(input) {\r\n//                     this[\"_\" + key] = input;\r\n//                     if(this[key + \"_f\"]) {\r\n//                         this[key + \"_f\"]()\r\n//                     }\r\n//                 }\r\n//             });\r\n\r\n//             jsObj[key] = value;\r\n//         }            \r\n//     }\r\n\r\n//     return new YAModule(jsObj.constructor.name, htmlElement, jsObj);        \r\n// }\n\n//# sourceURL=webpack:///../src/yaComponentCreator.js?");
+
+/***/ }),
+
 /***/ "./HelloWorld.js":
 /*!***********************!*\
   !*** ./HelloWorld.js ***!
   \***********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-eval("class HelloWorld {\r\n    constructor() {\r\n        this.template = '<div><span>{{ text }}</span> <span ya-update=\"count\"></span> <span>{{text2}}</span></div><button class=\"button\" ya-click=\"clickfunction\">Click mich</button>';\r\n        this.text = \"I was clicked\"; \r\n        this.text2 = \"times.\"\r\n        this.count = 0;\r\n    }\r\n\r\n    clickfunction() {\r\n        this.count++;\r\n    }\r\n}\n\n//# sourceURL=webpack:///./HelloWorld.js?");
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return HelloWorld; });\nclass HelloWorld {\r\n    constructor() {\r\n        this.template = '<div><span>{{ text }}</span> <span ya-update=\"count\"></span> <span>{{text2}}</span></div><button class=\"button\" ya-click=\"clickfunction\">Click mich</button>';\r\n        this.text = \"I was clicked\"; \r\n        this.text2 = \"times.\"\r\n        this.count = 0;\r\n    }\r\n\r\n    clickfunction() {\r\n        this.count++;\r\n    }\r\n}\n\n//# sourceURL=webpack:///./HelloWorld.js?");
 
 /***/ }),
 
@@ -105,7 +128,7 @@ eval("class HelloWorld {\r\n    constructor() {\r\n        this.template = '<div
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _HelloWorld_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HelloWorld.js */ \"./HelloWorld.js\");\n/* harmony import */ var _HelloWorld_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_HelloWorld_js__WEBPACK_IMPORTED_MODULE_0__);\n\r\n\r\nconst ya = new YA();\r\nya.start(_HelloWorld_js__WEBPACK_IMPORTED_MODULE_0___default.a);\n\n//# sourceURL=webpack:///./index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _HelloWorld_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HelloWorld.js */ \"./HelloWorld.js\");\n/* harmony import */ var _src_ya_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../src/ya.js */ \"../src/ya.js\");\n/* harmony import */ var _src_ya_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_src_ya_js__WEBPACK_IMPORTED_MODULE_1__);\n\r\n\r\n\r\nconst ya = new _src_ya_js__WEBPACK_IMPORTED_MODULE_1___default.a();\r\ndebugger;\r\nya.start(_HelloWorld_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"]);\n\n//# sourceURL=webpack:///./index.js?");
 
 /***/ })
 

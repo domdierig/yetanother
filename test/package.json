@@ -1,0 +1,9 @@
+{
+	"name": "test",
+	"version": "1.0.0",
+	"description": "test",
+	"devDependencies": {
+		"webpack": "4.28.4",
+		"webpack-cli": "3.2.1"
+	}
+}

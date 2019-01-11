@@ -2,9 +2,7 @@ const path = require("path");
 
 module.exports = {
     entry: {
-        ya: "./src/ya.js",
-        yaGlobal: "./src/yaGlobal.js",
-        index: "./index.js"
+        ya: "./src/ya.js"
     },
     output: {
         path: path.resolve(__dirname, "build")
@@ -13,5 +11,19 @@ module.exports = {
     watchOptions: {
         ignored: /nodeModules/
     },
-    mode: "development"
+    mode: "development",
+	module: {
+		rules: [
+			{
+				test: /\.m?js$/,
+      			exclude: /(node_modules|bower_components)/,
+				use: {
+					loader: 'babel-loader',
+					options: {
+						presets: ['@babel/preset-env']
+					}
+				} 
+			}
+		]
+	}
 }

@@ -12,5 +12,6 @@ module.exports = {
     watchOptions: {
         ignored: /nodeModules/
     },
-    mode: "development"
+    mode: "development",
+    devtool: "source-map"
 }

@@ -1,32 +1,58 @@
-module.exports = (obj) => {
-    for(const key in obj) {
-        debugger;
+const YaComponent = require("./yaComponent.js");
+const parseTemplate = require("./yaTemplateParser.js");
+
+const findComponentElements = (name) => {
+    return document.getElementsByTagName(name.toLowerCase());
+}
+
+const createSetAndGetMethods = (component) => {
+    for(const key in component) {
+        const value = component[key];
+
+        Object.defineProperty(component, key, {
+            get: () => {
+                return this["_" + key];
+            },
+            set: (input) => {
+                this["_" + key] = input;
+                if(this[key+ "_f"]) {
+                    this[key + "_f"]();
+                }
+            }
+        });
+
+        component[key] = value;
     }
 }
 
+const setStaticsToTemplate = (templateElement, appComponent) => {
 
+}
 
+const setDynamicsToTemplate = (templateElement, appComponent) => {
 
-// createYAModule(jsObj, htmlElement) {
-//     for(let key in jsObj) {
-//         if(key !== "view") {
-//             let value = jsObj[key];
+}
 
-//             Object.defineProperty(jsObj, key, {
-//                 get: function() {
-//                     return this["_" + key]
-//                 },
-//                 set: function(input) {
-//                     this["_" + key] = input;
-//                     if(this[key + "_f"]) {
-//                         this[key + "_f"]()
-//                     }
-//                 }
-//             });
+const setDirectivesToTemplate = (templateElement, appComponent) => {
 
-//             jsObj[key] = value;
-//         }            
-//     }
+}
 
-//     return new YAModule(jsObj.constructor.name, htmlElement, jsObj);        
-// }
+module.exports = (appComponentConstructor) => {
+    const elements = findComponentElements(appComponentConstructor.name);
+
+    for(const yaComponentElement of elements) {        
+        let appComponent = new appComponentConstructor();
+        let templateElement = parseTemplate(appComponent.template);
+        
+        createSetAndGetMethods(appComponent);
+        
+        setStaticsToTemplate(templateElement, appComponent);
+        setDynamicsToTemplate(templateElement, appComponent);
+        setDirectivesToTemplate(templateElement, appComponent);
+
+        //add template element to element
+
+        const yaComponent = new YaComponent(yaComponentElement, appComponent);
+    }
+}
+

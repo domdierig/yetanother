@@ -93,7 +93,37 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const createYaComponent = __webpack_require__(/*! ./yaComponentCreator.js */ \"../src/yaComponentCreator.js\");\r\n\r\nclass YA {\r\n    constructor() {\r\n        \r\n    }\r\n\r\n    start(objConstructor) {\r\n        createYaComponent(objConstructor);\r\n    }\r\n}\r\n\r\nmodule.exports = YA;\n\n//# sourceURL=webpack:///../src/ya.js?");
+const createYaComponent = __webpack_require__(/*! ./yaComponentCreator.js */ "../src/yaComponentCreator.js");
+
+class YA {
+    constructor() {
+        
+    }
+
+    start(objConstructor) {
+        let yaComponent = createYaComponent(objConstructor);
+    }
+}
+
+module.exports = YA;
+
+/***/ }),
+
+/***/ "../src/yaComponent.js":
+/*!*****************************!*\
+  !*** ../src/yaComponent.js ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+class YaComponent {
+    constructor(domElement, appComponent) {
+        this.domElement = domElement;
+        this.appComponent = appComponent;
+    }
+}
+
+module.exports = YaComponent;
 
 /***/ }),
 
@@ -102,9 +132,85 @@ eval("const createYaComponent = __webpack_require__(/*! ./yaComponentCreator.js 
   !*** ../src/yaComponentCreator.js ***!
   \************************************/
 /*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const YaComponent = __webpack_require__(/*! ./yaComponent.js */ "../src/yaComponent.js");
+const parseTemplate = __webpack_require__(/*! ./yaTemplateParser.js */ "../src/yaTemplateParser.js");
+
+const findComponentElements = (name) => {
+    return document.getElementsByTagName(name.toLowerCase());
+}
+
+const createSetAndGetMethods = (component) => {
+    for(const key in component) {
+        const value = component[key];
+
+        Object.defineProperty(component, key, {
+            get: () => {
+                return this["_" + key];
+            },
+            set: (input) => {
+                this["_" + key] = input;
+                if(this[key+ "_f"]) {
+                    this[key + "_f"]();
+                }
+            }
+        });
+
+        component[key] = value;
+    }
+}
+
+const setStaticsToTemplate = (templateElement, appComponent) => {
+
+}
+
+const setDynamicsToTemplate = (templateElement, appComponent) => {
+
+}
+
+const setDirectivesToTemplate = (templateElement, appComponent) => {
+
+}
+
+module.exports = (appComponentConstructor) => {
+    const elements = findComponentElements(appComponentConstructor.name);
+
+    for(const yaComponentElement of elements) {        
+        let appComponent = new appComponentConstructor();
+        let templateElement = parseTemplate(appComponent.template);
+        
+        createSetAndGetMethods(appComponent);
+        
+        setStaticsToTemplate(templateElement, appComponent);
+        setDynamicsToTemplate(templateElement, appComponent);
+        setDirectivesToTemplate(templateElement, appComponent);
+
+        //add template element to element
+
+        const yaComponent = new YaComponent(yaComponentElement, appComponent);
+    }
+}
+
+
+
+/***/ }),
+
+/***/ "../src/yaTemplateParser.js":
+/*!**********************************!*\
+  !*** ../src/yaTemplateParser.js ***!
+  \**********************************/
+/*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("module.exports = (obj) => {\r\n    for(const key in obj) {\r\n        debugger;\r\n    }\r\n}\r\n\r\n\r\n\r\n\r\n// createYAModule(jsObj, htmlElement) {\r\n//     for(let key in jsObj) {\r\n//         if(key !== \"view\") {\r\n//             let value = jsObj[key];\r\n\r\n//             Object.defineProperty(jsObj, key, {\r\n//                 get: function() {\r\n//                     return this[\"_\" + key]\r\n//                 },\r\n//                 set: function(input) {\r\n//                     this[\"_\" + key] = input;\r\n//                     if(this[key + \"_f\"]) {\r\n//                         this[key + \"_f\"]()\r\n//                     }\r\n//                 }\r\n//             });\r\n\r\n//             jsObj[key] = value;\r\n//         }            \r\n//     }\r\n\r\n//     return new YAModule(jsObj.constructor.name, htmlElement, jsObj);        \r\n// }\n\n//# sourceURL=webpack:///../src/yaComponentCreator.js?");
+module.exports = (templateString) => {
+    let parser = new DOMParser();
+    let tempDoc = parser.parseFromString(templateString, "text/html");
+    if(tempDoc.childNodes[0].childNodes[1].childNodes.length > 1) {
+        console.error("YA only supports one top level element in a component template");
+    }
+    return tempDoc.childNodes[0].childNodes[1].childNodes[0];
+}
 
 /***/ }),
 
@@ -116,7 +222,20 @@ eval("module.exports = (obj) => {\r\n    for(const key in obj) {\r\n        debu
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return HelloWorld; });\nclass HelloWorld {\r\n    constructor() {\r\n        this.template = '<div><span>{{ text }}</span> <span ya-update=\"count\"></span> <span>{{text2}}</span></div><button class=\"button\" ya-click=\"clickfunction\">Click mich</button>';\r\n        this.text = \"I was clicked\"; \r\n        this.text2 = \"times.\"\r\n        this.count = 0;\r\n    }\r\n\r\n    clickfunction() {\r\n        this.count++;\r\n    }\r\n}\n\n//# sourceURL=webpack:///./HelloWorld.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return HelloWorld; });
+class HelloWorld {
+    constructor() {
+        this.template = '<div><span>{{ text }}</span> <span ya-update="count"></span> <span>{{text2}}</span><button class="button" ya-click="clickfunction">Click mich</button></div>';
+        this.text = "I was clicked"; 
+        this.text2 = "times."
+        this.count = 0;
+    }
+
+    clickfunction() {
+        this.count++;
+    }
+}
 
 /***/ }),
 
@@ -128,8 +247,17 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _HelloWorld_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HelloWorld.js */ \"./HelloWorld.js\");\n/* harmony import */ var _src_ya_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../src/ya.js */ \"../src/ya.js\");\n/* harmony import */ var _src_ya_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_src_ya_js__WEBPACK_IMPORTED_MODULE_1__);\n\r\n\r\n\r\nconst ya = new _src_ya_js__WEBPACK_IMPORTED_MODULE_1___default.a();\r\ndebugger;\r\nya.start(_HelloWorld_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"]);\n\n//# sourceURL=webpack:///./index.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _HelloWorld_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HelloWorld.js */ "./HelloWorld.js");
+/* harmony import */ var _src_ya_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../src/ya.js */ "../src/ya.js");
+/* harmony import */ var _src_ya_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_src_ya_js__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+const ya = new _src_ya_js__WEBPACK_IMPORTED_MODULE_1___default.a();
+ya.start(_HelloWorld_js__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 /***/ })
 
 /******/ });
+//# sourceMappingURL=index.bundle.js.map

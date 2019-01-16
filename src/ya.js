@@ -6,7 +6,7 @@ class YA {
     }
 
     start(objConstructor) {
-        createYaComponent(objConstructor);
+        let yaComponent = createYaComponent(objConstructor);
     }
 }
 
